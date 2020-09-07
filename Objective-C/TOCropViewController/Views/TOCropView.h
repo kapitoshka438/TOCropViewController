@@ -252,10 +252,16 @@ The minimum croping aspect ratio. If set, user is prevented from setting croppin
 
 /**
  Rotates the entire canvas to a 90-degree angle. The default rotation is counterclockwise.
- 
+
  @param animated Whether the transition is animated
  */
 - (void)rotateImageNinetyDegreesAnimated:(BOOL)animated;
+/**
+ Flip the entire canvas horizontally.
+
+ @param animated Whether the transition is animated
+ */
+- (void)flipImageAnimated:(BOOL)animated;
 
 /**
  Rotates the entire canvas to a 90-degree angle

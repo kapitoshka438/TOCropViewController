@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The cropper control buttons */
 @property (nonatomic, strong, readonly)  UIButton *rotateCounterclockwiseButton;
+@property (nonatomic, strong, readonly)  UIButton *flipButton;
 @property (nonatomic, strong, readonly)  UIButton *resetButton;
 @property (nonatomic, strong, readonly)  UIButton *clampButton;
 @property (nullable, nonatomic, strong, readonly) UIButton *rotateClockwiseButton;
@@ -59,6 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) void (^cancelButtonTapped)(void);
 @property (nullable, nonatomic, copy) void (^doneButtonTapped)(void);
 @property (nullable, nonatomic, copy) void (^rotateCounterclockwiseButtonTapped)(void);
+@property (nullable, nonatomic, copy) void (^flipButtonTapped)(void);
 @property (nullable, nonatomic, copy) void (^rotateClockwiseButtonTapped)(void);
 @property (nullable, nonatomic, copy) void (^clampButtonTapped)(void);
 @property (nullable, nonatomic, copy) void (^resetButtonTapped)(void);

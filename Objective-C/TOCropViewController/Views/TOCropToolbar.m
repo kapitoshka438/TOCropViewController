@@ -113,13 +113,20 @@
     [_clampButton setImage:[TOCropToolbar clampImage] forState:UIControlStateNormal];
     [_clampButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_clampButton];
-    
+
     _rotateCounterclockwiseButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _rotateCounterclockwiseButton.contentMode = UIViewContentModeCenter;
     _rotateCounterclockwiseButton.tintColor = [UIColor whiteColor];
     [_rotateCounterclockwiseButton setImage:[TOCropToolbar rotateCCWImage] forState:UIControlStateNormal];
     [_rotateCounterclockwiseButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_rotateCounterclockwiseButton];
+
+    _flipButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _flipButton.contentMode = UIViewContentModeCenter;
+    _flipButton.tintColor = [UIColor whiteColor];
+    [_flipButton setImage:[TOCropToolbar flipImage] forState:UIControlStateNormal];
+    [_flipButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_flipButton];
     
     _rotateClockwiseButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _rotateClockwiseButton.contentMode = UIViewContentModeCenter;
@@ -223,6 +230,8 @@
         if (!self.resetButtonHidden) {
             [buttonsInOrderHorizontally addObject:self.resetButton];
         }
+
+        [buttonsInOrderHorizontally addObject:self.flipButton];
         
         if (!self.clampButtonHidden) {
             [buttonsInOrderHorizontally addObject:self.clampButton];
@@ -261,7 +270,9 @@
         if (!self.resetButtonHidden) {
             [buttonsInOrderVertically addObject:self.resetButton];
         }
-        
+
+        [buttonsInOrderVertically addObject:self.flipButton];
+
         if (!self.clampButtonHidden) {
             [buttonsInOrderVertically addObject:self.clampButton];
         }
@@ -313,6 +324,9 @@
     }
     else if (button == self.rotateCounterclockwiseButton && self.rotateCounterclockwiseButtonTapped) {
         self.rotateCounterclockwiseButtonTapped();
+    }
+    else if (button == self.flipButton && self.flipButtonTapped) {
+        self.flipButtonTapped();
     }
     else if (button == self.rotateClockwiseButton && self.rotateClockwiseButtonTapped) {
         self.rotateClockwiseButtonTapped();
@@ -455,6 +469,53 @@
     UIGraphicsEndImageContext();
     
     return cancelImage;
+}
+
++ (UIImage *) flipImage
+{
+    UIImage *flipImage = nil;
+
+    UIGraphicsBeginImageContextWithOptions((CGSize){20,20}, NO, 0.0f);
+
+    UIColor* strokeColor = [UIColor colorWithRed: 0.592 green: 0.592 blue: 0.592 alpha: 1];
+
+    {
+        UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+        [bezierPath moveToPoint: CGPointMake(0.5, 17.5)];
+        [bezierPath addCurveToPoint: CGPointMake(7.87, 1.76) controlPoint1: CGPointMake(0.5, 17.5) controlPoint2: CGPointMake(2.96, 12.25)];
+        [bezierPath addLineToPoint: CGPointMake(7.87, 17.5)];
+        [bezierPath addCurveToPoint: CGPointMake(0.5, 17.5) controlPoint1: CGPointMake(2.96, 17.5) controlPoint2: CGPointMake(0.5, 17.5)];
+        [bezierPath closePath];
+        [strokeColor setStroke];
+        bezierPath.lineWidth = 1;
+        bezierPath.lineJoinStyle = kCGLineJoinRound;
+        [bezierPath stroke];
+
+        UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
+        [bezier2Path moveToPoint: CGPointMake(19.5, 17.5)];
+        [bezier2Path addCurveToPoint: CGPointMake(11.67, 1.75) controlPoint1: CGPointMake(19.5, 17.5) controlPoint2: CGPointMake(16.89, 12.25)];
+        [bezier2Path addLineToPoint: CGPointMake(11.67, 17.5)];
+        [bezier2Path addCurveToPoint: CGPointMake(19.5, 17.5) controlPoint1: CGPointMake(16.89, 17.5) controlPoint2: CGPointMake(19.5, 17.5)];
+        [bezier2Path closePath];
+        [strokeColor setStroke];
+        bezier2Path.lineWidth = 1;
+        bezier2Path.lineJoinStyle = kCGLineJoinRound;
+        [bezier2Path stroke];
+
+        UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
+        [bezier3Path moveToPoint: CGPointMake(9.75, 1.25)];
+        [bezier3Path addLineToPoint: CGPointMake(9.75, 18.75)];
+        [strokeColor setStroke];
+        bezier3Path.lineWidth = 0.5;
+        bezier3Path.lineCapStyle = kCGLineCapRound;
+        [bezier3Path stroke];
+
+        flipImage = UIGraphicsGetImageFromCurrentImageContext();
+    }
+
+    UIGraphicsEndImageContext();
+
+    return flipImage;
 }
 
 + (UIImage *)rotateCCWImage
